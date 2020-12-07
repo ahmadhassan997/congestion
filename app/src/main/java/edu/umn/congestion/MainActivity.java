@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     String tgtIp = "";
     String tgtPort = "";
+    String srcPort = "";
     String filename = "tmp";
     String duration = "10";
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 if (checkRooted()) {
 
                     tcpdump_command = "tcpdump -i any -s 96 -w " +
-                            GetTCPDumpFullPath(filename);
+                            GetTCPDumpFullPath(filename) + " port " + tgtPort;
 
                     // Prepare shell command
                     // Callback to report whether the shell was successfully started up
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (checkRooted()) {
                     /* start raw tcp socket on receiver */
-                    rtcpCmd = "./data/local/tmp/receiver " + getIPAddress(true) + " " + tgtIp + " " + tgtPort + " " + filename + " " + duration;
+                    rtcpCmd = "./data/local/tmp/receiver " + getIPAddress(true) + " " + tgtIp + " " + srcPort + " " + tgtPort + " " + duration + " " + filename;
                     try {
                         Process p = Runtime.getRuntime().exec("su");
                         DataOutputStream os = new DataOutputStream(p.getOutputStream());
